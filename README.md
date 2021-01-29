@@ -1,8 +1,6 @@
 # aop-part4-chapter04 - 왓챠 인트로 따라하기
 
----
-
-## 목차
+# 목차
 
 1. ScrollView에 모션 레이아웃 구현하기 1차
 2. Tmap POI 데이터 소개 및 데이터 뿌리기
