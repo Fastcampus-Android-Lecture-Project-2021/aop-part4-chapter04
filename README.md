@@ -1,12 +1,10 @@
 # aop-part4-chapter04 - 왓챠 인트로 따라하기
 
 # 목차
-
 1. ScrollView에 모션 레이아웃 구현하기 1차
-2. Tmap POI 데이터 소개 및 데이터 뿌리기
-3. AppbarLayout을 이용해 헤더 애니메이션 구현하기
-4. ScrollView에 모션 레이아웃 구현하기 2차
-5. ScrollView 내 부족한 내용 추가 및 다듬기
+2. AppbarLayout을 이용해 헤더 애니메이션 구현하기
+3. ScrollView에 모션 레이아웃 구현하기 2차
+4. ScrollView 내 부족한 내용 추가 및 다듬기
 
 
 
