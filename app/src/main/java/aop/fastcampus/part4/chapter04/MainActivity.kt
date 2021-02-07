@@ -9,14 +9,12 @@ import android.util.TypedValue
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import androidx.appcompat.widget.Toolbar
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.MotionLayout.TransitionListener
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import aop.fastcampus.part4.chapter04.databinding.ActivityMainBinding
 import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import kotlin.math.abs
 
 class MainActivity : AppCompatActivity() {
@@ -40,14 +38,17 @@ class MainActivity : AppCompatActivity() {
 
     private fun initAppBar() {
         binding.appBar.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-            val topPadding = 120f.dpToPx(this)
+            val topPadding = 300f.dpToPx(this)
+            val realAlphaScrollHeight = appBarLayout.measuredHeight - appBarLayout.totalScrollRange
             val abstractOffset = abs(verticalOffset)
+
+            val realAlphaVerticalOffset = if (abstractOffset - topPadding < 0) 0f else abstractOffset - topPadding
+
             if (abstractOffset < topPadding) {
                 binding.toolbarBackgroundView.alpha = 0f
                 return@OnOffsetChangedListener
             }
-            val verticalOffsetByTopPadding = abstractOffset - topPadding
-            val percentage = abs(verticalOffsetByTopPadding) / appBarLayout.totalScrollRange
+            val percentage = realAlphaVerticalOffset / realAlphaScrollHeight
             binding.toolbarBackgroundView.alpha = 1 - (if (1 - percentage * 2 < 0) 0f else 1 - percentage * 2)
         })
         initActionBar()
@@ -87,11 +88,13 @@ class MainActivity : AppCompatActivity() {
 
             if (scrolledValue > 150f.dpToPx(this@MainActivity).toInt()) {
                 if (isGateringMotionAnimating.not()) {
+                    binding.gatheringDigitalThingsBackgroundMotionLayout.transitionToEnd()
                     binding.gatheringDigitalThingsMotionLayout.transitionToEnd()
                     binding.buttonShownMotionLayout.transitionToEnd()
                 }
             } else {
                 if (isGateringMotionAnimating.not()) {
+                    binding.gatheringDigitalThingsBackgroundMotionLayout.transitionToStart()
                     binding.gatheringDigitalThingsMotionLayout.transitionToStart()
                     binding.buttonShownMotionLayout.transitionToStart()
                 }
