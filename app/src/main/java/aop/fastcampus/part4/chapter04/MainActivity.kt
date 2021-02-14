@@ -6,9 +6,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.TypedValue
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
 import androidx.constraintlayout.motion.widget.MotionLayout
 import androidx.constraintlayout.motion.widget.MotionLayout.TransitionListener
 import androidx.core.view.ViewCompat
@@ -22,6 +20,9 @@ class MainActivity : AppCompatActivity() {
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     private var isGateringMotionAnimating: Boolean = false
+
+    private var isCurationMotionAnimating: Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -99,6 +100,14 @@ class MainActivity : AppCompatActivity() {
                     binding.buttonShownMotionLayout.transitionToStart()
                 }
             }
+
+            if (scrolledValue > binding.scrollView.height) {
+                if (isCurationMotionAnimating.not()) {
+                    binding.curationAnimationMotionLayout.setTransition(R.id.curation_animation_start1, R.id.curation_animation_end1)
+                    binding.curationAnimationMotionLayout.transitionToEnd()
+                    isCurationMotionAnimating = true
+                }
+            }
         }
     }
 
@@ -110,8 +119,26 @@ class MainActivity : AppCompatActivity() {
 
             override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) = Unit
 
-            override fun onTransitionCompleted(p0: MotionLayout?, p1: Int) {
+            override fun onTransitionCompleted(p0: MotionLayout?, currentId: Int) {
                 isGateringMotionAnimating = false
+            }
+
+            override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) = Unit
+
+        })
+
+        binding.curationAnimationMotionLayout.setTransitionListener(object : TransitionListener {
+            override fun onTransitionStarted(p0: MotionLayout?, p1: Int, p2: Int) = Unit
+
+            override fun onTransitionChange(p0: MotionLayout?, p1: Int, p2: Int, p3: Float) = Unit
+
+            override fun onTransitionCompleted(p0: MotionLayout?, currentId: Int) {
+                when (currentId) {
+                    R.id.curation_animation_end1 -> {
+                        binding.curationAnimationMotionLayout.setTransition(R.id.curation_animation_start2, R.id.curation_animation_end2)
+                        binding.curationAnimationMotionLayout.transitionToEnd()
+                    }
+                }
             }
 
             override fun onTransitionTrigger(p0: MotionLayout?, p1: Int, p2: Boolean, p3: Float) = Unit
@@ -125,8 +152,9 @@ fun Float.dpToPx(context: Context): Float =
     TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, this, context.resources.displayMetrics)
 
 fun Activity.makeStatusBarTransparent() {
-    window.apply {
-        decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
+    with(window) {
+        decorView.systemUiVisibility =
+            View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or
             View.SYSTEM_UI_FLAG_LAYOUT_STABLE
         addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
         statusBarColor = Color.TRANSPARENT
