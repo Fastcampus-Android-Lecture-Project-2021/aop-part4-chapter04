@@ -1,4 +1,4 @@
-# aop-part4-chapter04 - 왓챠 인트로 따라하기
+# aop-part4-chapter04 - OTT 앱 인트로 따라하기
 
 # 목차
 1. ScrollView에 모션 레이아웃 구현하기 1차
@@ -10,6 +10,6 @@
 
 ## 결과 화면
 
-| 모션 레이아웃 구현하기 1차 | AppbarLayout을 이용해 헤더 애니메이션 구현하기 |
-| -------------------------------------- | ------------------------------------------- |
-| ![모션 레이아웃 구현하기 1차](https://imgur.com/OEarmFb.gif) | ![AppbarLayout을 이용해 헤더 애니메이션 구현하기](https://imgur.com/N73VXj4.gif) |
+| 결과 화면 |
+| -------------------------------------- |
+| ![결과 화면](https://user-images.githubusercontent.com/8112952/109826336-07971f00-7c7e-11eb-94fb-5dfa433f1da6.gif) |
